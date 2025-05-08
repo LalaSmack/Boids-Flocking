@@ -14,7 +14,7 @@ width, height = window.get_size()
 clock = pg.time.Clock()
 
 # Set up the boids
-num_boids = 30
+num_boids = 70
 boids = ([Boid(width, height) for _ in range(num_boids)])
 
 # Main loop

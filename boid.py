@@ -32,10 +32,11 @@ class Boid:
     def separation(self, boids):
         v = pg.Vector2(0, 0)
         for boid in boids:
-            if boid != self:
-                if self.position.distance_to(boid.position) < RADIUS_PERCEPTION - 10:
-                    v -= self.position - boid.position
-        return v
+            d = self.position.distance_to(boid.position)
+            if boid != self and d < RADIUS_PERCEPTION//3:
+                    v -= (boid.position - self.position)/d # move away from the boid
+                                                           # move away faster if the boid is closer
+        return v 
     
     def alignment(self, boids):
         v = pg.Vector2(0, 0)
@@ -51,9 +52,9 @@ class Boid:
     
     def update(self, boids):
         c = self.cohesion(boids)
-        #s = self.separation(boids)
+        s = self.separation(boids)
         a = self.alignment(boids)
-        self.velocity += c + a
+        self.velocity +=  c + s + a 
         self.position += self.velocity
 
         if self.velocity.length() > MAX_VELOCITY:
