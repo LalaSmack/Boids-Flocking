@@ -21,12 +21,14 @@ class Boid:
         count = 0 #keeping track of how many boids are in the perception radius 
         for boid in boids:
             if boid != self and self.position.distance_to(boid.position) < RADIUS_PERCEPTION:
-                v += boid.position - self.position
+                v += boid.position
                 count += 1
         if count > 0:
             v /= count
-        return v
-    
+            v -= self.position
+        return v*0.01 # move 1% towards the center of the boids in the perception radius
+                      # this avoids the boids from moving too fast towards the center of the flock
+
     def separation(self, boids):
         v = pg.Vector2(0, 0)
         for boid in boids:
@@ -48,10 +50,10 @@ class Boid:
         
     
     def update(self, boids):
-        #c = self.cohesion(boids)
+        c = self.cohesion(boids)
         #s = self.separation(boids)
         a = self.alignment(boids)
-        self.velocity += a
+        self.velocity += c + a
         self.position += self.velocity
 
         if self.velocity.length() > MAX_VELOCITY:

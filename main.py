@@ -31,6 +31,7 @@ while running:
     for boid in boids:
         boid.update(boids)
         boid.draw(window)
+        #print(boid.position, boid.velocity)  # Print position and velocity for debugging
 
     # Update the display
     pg.display.flip()
