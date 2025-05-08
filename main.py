@@ -14,7 +14,7 @@ width, height = window.get_size()
 clock = pg.time.Clock()
 
 # Set up the boids
-num_boids = 50
+num_boids = 30
 boids = ([Boid(width, height) for _ in range(num_boids)])
 
 # Main loop
@@ -29,7 +29,7 @@ while running:
 
     # Update and draw boids
     for boid in boids:
-        boid.update(boids, window)
+        boid.update(boids)
         boid.draw(window)
 
     # Update the display
