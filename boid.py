@@ -50,16 +50,30 @@ class Boid:
         return v
         
     
-    def update(self, boids):
+    def update(self, boids, predator):
         c = self.cohesion(boids)
         s = self.separation(boids)
         a = self.alignment(boids)
 
-        self.velocity +=  c + s + a 
+        # Avoid the predator
+        p = pg.Vector2(0, 0)
+        distance = self.position.distance_to(predator.position)
+
+        scatter = 1 
+        speedup = 1
+        if distance < RADIUS_PERCEPTION:
+            scatter = 0 # if the predator is close dont flock
+             # if the predator is close, speed up
+            if distance < 20:
+                # If the predator is very close, move away from it
+                p = (self.position - predator.position) * 0.5
+            p = (self.position - predator.position) * 0.1
+            
+        self.velocity +=  (scatter*c) + s + (speedup*a) + p
         self.position += self.velocity
-        
+
         # Limit the velocity to a maximum value
-        if self.velocity.length() > MAX_VELOCITY:
+        if self.velocity.length() > MAX_VELOCITY and predator.position.distance_to(self.position) > RADIUS_PERCEPTION -15:
             self.velocity.scale_to_length(MAX_VELOCITY)
 
         
