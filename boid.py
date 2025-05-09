@@ -54,11 +54,14 @@ class Boid:
         c = self.cohesion(boids)
         s = self.separation(boids)
         a = self.alignment(boids)
+
         self.velocity +=  c + s + a 
         self.position += self.velocity
-
+        
+        # Limit the velocity to a maximum value
         if self.velocity.length() > MAX_VELOCITY:
             self.velocity.scale_to_length(MAX_VELOCITY)
+
         
         # Wrap around the screen edges
         if self.position.x < 0:

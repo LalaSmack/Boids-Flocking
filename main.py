@@ -1,7 +1,7 @@
 import pygame as pg
-import random
-import numpy as np
+import pygame_gui as gui
 from boid import Boid
+from predator import Predator
 
 # pygame initialization
 pg.init()
@@ -14,8 +14,11 @@ width, height = window.get_size()
 clock = pg.time.Clock()
 
 # Set up the boids
-num_boids = 70
-boids = ([Boid(width, height) for _ in range(num_boids)])
+num_boids = 50 # Number of boids
+boids = ([Boid(width, height) for _ in range(num_boids)]) # initialize the boids
+
+# Set up the predators
+predator = Predator(width, height) # initialize the predator
 
 # Main loop
 running = True
@@ -32,6 +35,10 @@ while running:
         boid.update(boids)
         boid.draw(window)
         #print(boid.position, boid.velocity)  # Print position and velocity for debugging
+    
+    predator.update(boids) # update the predator
+    predator.draw(window) # draw the predator
+        
 
     # Update the display
     pg.display.flip()
