@@ -60,5 +60,5 @@ class Predator:
         center = (self.position.x, self.position.y)
         if self.position.x >= 0 and self.position.y >= 0:
             center = (round(self.position.x), round(self.position.y))
-        pg.draw.rect(window, self.color, (center[0]-self.size//2, center[1]-self.size//2, self.size, self.size))
+        pg.draw.rect(window, self.color,(center[0]-self.size//2, center[1]-self.size//2, self.size, self.size),1)
 
