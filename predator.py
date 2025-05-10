@@ -38,23 +38,43 @@ class Predator:
 
         return position*0.1 # move 10% towards the boid
     
+    def turn_inwards(self):
+        v = pg.Vector2(0,0)
+        r = 15
+        x_min = r
+        x_max = self.width - r
+        y_min = r
+        y_max = self.height -  r
+        if self.position.x < x_min:
+            v.x = 10
+        elif self.position.x > x_max:
+            v.x = -10
+        if self.position.y < y_min:
+            v.y = 10
+        elif self.position.y > y_max:
+            v.y = -10
+        return v
     def update(self, boids):
         h = self.hunt(boids)
-        self.velocity += h
+        t = self.turn_inwards() * random.uniform(0.1, 0.5)
+        if t.length() > 0:
+            self.velocity += t
+        else :
+            self.velocity += h 
         self.position += self.velocity
 
         if self.velocity.length() > MAX_VELOCITY:
             self.velocity.scale_to_length(MAX_VELOCITY)
         
         # Wrap around the screen edges
-        if self.position.x < 0:
-            self.position.x = self.width
-        elif self.position.x > self.width:
-            self.position.x = 0
-        if self.position.y < 0:
-            self.position.y = self.height
-        elif self.position.y > self.height:
-            self.position.y = 0
+        # if self.position.x < 0:
+        #     self.position.x = self.width
+        # elif self.position.x > self.width:
+        #     self.position.x = 0
+        # if self.position.y < 0:
+        #     self.position.y = self.height
+        # elif self.position.y > self.height:
+        #     self.position.y = 0
     
     def draw(self, window):
         center = (self.position.x, self.position.y)

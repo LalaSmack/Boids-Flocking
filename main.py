@@ -14,7 +14,7 @@ width, height = window.get_size()
 clock = pg.time.Clock()
 
 # Set up the boids
-num_boids = 30 # Number of boids
+num_boids = 50 # Number of boids
 boids = ([Boid(width, height) for _ in range(num_boids)]) # initialize the boids
 
 # Set up the predators

@@ -48,19 +48,38 @@ class Boid:
         if count > 0:
             v /= count #average the velocity of the boids in the perception radius
         return v
-        
     
+    def turn_inwards(self, boids):
+        v = pg.Vector2(0,0)
+        r = 30
+        x_min = r
+        x_max = self.width - r
+        y_min = r
+        y_max = self.height -  r
+        if self.position.x < x_min:
+            v.x = 10
+        elif self.position.x > x_max:
+            v.x = -10
+        if self.position.y < y_min:
+            v.y = 10
+        elif self.position.y > y_max:
+            v.y = -10
+        return v
+    
+    
+
     def update(self, boids, predator):
         c = self.cohesion(boids)
         s = self.separation(boids)
         a = self.alignment(boids)
+        t = self.turn_inwards(boids) * random.uniform(0.1, 0.5) # turn inwards with a random factor
+        
 
         # Avoid the predator
         p = pg.Vector2(0, 0)
         distance = self.position.distance_to(predator.position)
 
         scatter = 1 
-        speedup = 1
         if distance < RADIUS_PERCEPTION:
             scatter = 0 # if the predator is close dont flock
              # if the predator is close, speed up
@@ -68,8 +87,12 @@ class Boid:
                 # If the predator is very close, move away from it
                 p = (self.position - predator.position) * 0.5
             p = (self.position - predator.position) * 0.1
+        
+        if self.position.x < 12 or self.position.x > self.width - 12 or self.position.y < 12 or self.position.y > self.height - 12:
+            scatter = 0
+
             
-        self.velocity +=  (scatter*c) + s + (speedup*a) + p
+        self.velocity +=  (scatter*c) + s + a + p + t
         self.position += self.velocity
 
         # Limit the velocity to a maximum value
@@ -78,14 +101,14 @@ class Boid:
 
         
         # Wrap around the screen edges
-        if self.position.x < 0:
-            self.position.x = self.width
-        elif self.position.x > self.width:
-            self.position.x = 0
-        if self.position.y < 0:
-            self.position.y = self.height
-        elif self.position.y > self.height:
-            self.position.y = 0
+        # if self.position.x < 0:
+        #     self.position.x = self.width
+        # elif self.position.x > self.width:
+        #     self.position.x = 0
+        # if self.position.y < 0:
+        #     self.position.y = self.height
+        # elif self.position.y > self.height:
+        #     self.position.y = 0
 
 
     def draw(self, window):
