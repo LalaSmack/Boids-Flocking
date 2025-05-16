@@ -6,7 +6,7 @@ MAX_VELOCITY = 3
 RADIUS_PERCEPTION = 40
 
 class Boid:
-    def __init__ (self,width, height):
+    def __init__ (self,width, height, cohesion=1, separation=1, alignment=1):
         self.position = pg.math.Vector2(random.randint(0, width), random.randint(0, height))
         self.velocity = pg.math.Vector2(random.uniform(-2, 2), random.uniform(-2, 2))
         red = random.randint(0, 255)
@@ -15,6 +15,9 @@ class Boid:
         self.color = pg.Color(red, green, blue)
         self.width = width
         self.height = height
+        self.cohesion_slider = cohesion
+        self.separation_slider = separation
+        self.alignment_slider = alignment
     
     def cohesion(self, boids):
         v = pg.Vector2(0, 0)
@@ -66,12 +69,19 @@ class Boid:
             v.y = -10
         return v
     
+    def adjust_cohesion(self, value):
+        self.cohesion_slider = value
     
+    def adjust_separation(self, value):
+        self.separation_slider = value
+    
+    def adjust_alignment(self, value):
+        self.alignment_slider = value
 
     def update(self, boids, predator):
-        c = self.cohesion(boids)
-        s = self.separation(boids)
-        a = self.alignment(boids)
+        c = self.cohesion(boids) * self.cohesion_slider
+        s = self.separation(boids) * self.separation_slider
+        a = self.alignment(boids) * self.alignment_slider
         t = self.turn_inwards(boids) * random.uniform(0.1, 0.5) # turn inwards with a random factor
         
 
