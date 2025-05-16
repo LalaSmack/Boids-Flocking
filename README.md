@@ -2,7 +2,7 @@
 
 A 2D Boids simulator built with **Python** and **Pygame** that visualizes flocking behavior through simple rules.Featuring real-time **GUI sliders** to adjust flocking parameters and a **predator** that dynamically alters boid behavior.
 
-## 🎮 Features
+## Features
 
 - Real-time flocking simulation with colorful boids  
 - **Sliders** to adjust:
@@ -13,7 +13,7 @@ A 2D Boids simulator built with **Python** and **Pygame** that visualizes flocki
 - Boids react to a **predator** that actively chases them  
 - Clean, modular code using `pygame_gui`
 
-## 📦 Requirements
+## Requirements
 
 Install dependencies using the included `requirements.txt`:
 
@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 1. Clone or download the repository.
 2. Navigate to the project folder.
@@ -50,7 +50,7 @@ The predator continuously moves toward the flock’s center and causes nearby bo
 
 ---
 
-## 🖱️ GUI
+## GUI
 
 A simple control panel is integrated using `pygame_gui`:
 
@@ -59,6 +59,9 @@ A simple control panel is integrated using `pygame_gui`:
 - **Separation Slider** – Adjusts how much boids avoid getting too close to each other
 
 All sliders are interactive and take effect immediately, allowing you to experiment with flocking behavior without restarting the simulation.
+
+## Resources 
+https://vergenet.net/~conrad/boids/pseudocode.html
 
 
 
